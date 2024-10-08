@@ -1,0 +1,140 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: MyApp(),
+  ));
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final TextEditingController _controller1 = TextEditingController();
+  final TextEditingController _controller2 = TextEditingController();
+
+  int _num1 = 0;
+  int _num2 = 0;
+  int _result = 0;
+
+  void _add() {
+    setState(() {
+      _num1 = int.parse(_controller1.text);
+      _num2 = int.parse(_controller2.text);
+      _result = _num1 + _num2;
+    });
+  }
+
+  void _sub() {
+    setState(() {
+      _num1 = int.parse(_controller1.text);
+      _num2 = int.parse(_controller2.text);
+      _result = _num1 - _num2;
+    });
+  }
+
+  void _mul() {
+    setState(() {
+      _num1 = int.parse(_controller1.text);
+      _num2 = int.parse(_controller2.text);
+      _result = _num1 * _num2;
+    });
+  }
+
+  void _div() {
+    setState(() {
+      _num1 = int.parse(_controller1.text);
+      _num2 = int.parse(_controller2.text);
+      if (_num2 != 0) {
+        _result = _num1 ~/ _num2; // Integer division
+      } else {
+        _result = 0; // Handle division by zero
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Simple Calculator'),
+        backgroundColor: Colors.blue.shade900,
+      ), // AppBar
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            SizedBox(height: 15),
+            Text(
+              "Result is: $_result",
+              style: TextStyle(fontSize: 20, color: Colors.blue.shade700),
+            ), // Text
+            SizedBox(height: 15),
+            TextField(
+              controller: _controller1,
+              decoration: InputDecoration(
+                labelText: "Enter number",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ), // OutlineInputBorder
+              ), // InputDecoration
+              keyboardType: TextInputType.number,
+            ), // TextField
+            SizedBox(height: 15),
+            TextField(
+              controller: _controller2,
+              decoration: InputDecoration(
+                labelText: "Enter number",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ), // OutlineInputBorder
+              ), // InputDecoration
+              keyboardType: TextInputType.number,
+            ), // TextField
+            SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _add();
+                    _controller1.clear();
+                    _controller2.clear();
+                  },
+                  child: Text('ADD'),
+                ), // ElevatedButton
+                ElevatedButton(
+                  onPressed: () {
+                    _sub();
+                  },
+                  child: Text('SUB'),
+                ), // ElevatedButton
+              ],
+            ), // Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    _mul();
+                  },
+                  child: Text('MUL'),
+                ), // ElevatedButton
+                ElevatedButton(
+                  onPressed: () {
+                    _div();
+                  },
+                  child: Text('DIV'),
+                ), // ElevatedButton
+              ],
+            ), // Row
+          ],
+        ), // Column
+      ), // Padding
+    ); // Scaffold
+  }
